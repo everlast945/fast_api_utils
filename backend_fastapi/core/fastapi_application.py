@@ -4,6 +4,7 @@ from routers.films import router as films_router
 from routers.dictionaries import router as dictionaries_router
 from routers.persons import router as persons_router
 
+
 class SettingApplication:
     def __init__(self) -> None:
         super().__init__()

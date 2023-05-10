@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.database import get_session
-from internal.persons.domain import PersonDomain, PersonDetailDomain
-from internal.persons.services import PersonDetailService, persons_list
+from internal.apps.persons.domain import PersonDomain, PersonDetailDomain
+from internal.apps.persons.services import PersonDetailService, persons_list
 
 
 router = APIRouter(tags=["persons"])

@@ -1,12 +1,13 @@
 import sqlalchemy as sa
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from entity.dictionaries import CountryEntity, GenreEntity
-from entity.films import FilmEntity, t__CountryToFilm, t__FilmToGenre, t__FilmToPerson
-from entity.persons import PersonEntity
-from internal.dictionaries.domain import CountryDomain, GenreDomain
-from internal.films.domain import FilmDetailDomain, FilmDomain
-from internal.persons.domain import PersonDomain
+from internal.entity.dictionaries import CountryEntity, GenreEntity
+from internal.entity.films import FilmEntity, t__CountryToFilm, t__FilmToGenre, t__FilmToPerson
+from internal.entity.persons import PersonEntity
+from internal.apps.dictionaries.domain import CountryDomain, GenreDomain
+from internal.apps.films.domain.film import FilmDomain
+from internal.apps.films.domain.film_detail import FilmDetailDomain
+from internal.apps.persons.domain.person import PersonDomain
 from utils.domain import map_fields
 
 
