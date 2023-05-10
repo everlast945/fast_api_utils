@@ -1,15 +1,14 @@
 import sqlalchemy as sa
-from sqlalchemy.ext.asyncio import AsyncSession
-
-from internal.entity.dictionaries import ProfessionEntity
-from internal.entity.films import FilmEntity, t__FilmToPerson
-from internal.entity.persons import PersonEntity, t__PersonToProfession
 from internal.apps.persons.domain.person import PersonDomain
 from internal.apps.persons.domain.person_detail import (
     PersonDetailDomain,
     PersonFilmDomain,
     PersonProfession,
 )
+from internal.entity.dictionaries import ProfessionEntity
+from internal.entity.films import FilmEntity, t__FilmToPerson
+from internal.entity.persons import PersonEntity, t__PersonToProfession
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class PersonDetailService:

@@ -1,7 +1,5 @@
-from fastapi import APIRouter, Depends
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from core.database import get_session
+from fastapi import APIRouter, Depends
 from internal.apps.dictionaries.domain import (
     CountryDomain,
     GenreDomain,
@@ -12,7 +10,7 @@ from internal.apps.dictionaries.services import (
     genres_list,
     professions_list,
 )
-
+from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter(tags=["dictionaries"])
 

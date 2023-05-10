@@ -1,5 +1,4 @@
 import sqlalchemy as sa
-
 from core.database import Base
 
 

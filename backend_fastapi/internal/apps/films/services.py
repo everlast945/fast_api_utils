@@ -1,6 +1,8 @@
 import sqlalchemy as sa
-from sqlalchemy.ext.asyncio import AsyncSession
-
+from internal.apps.dictionaries.domain import CountryDomain, GenreDomain
+from internal.apps.films.domain.film import FilmDomain
+from internal.apps.films.domain.film_detail import FilmDetailDomain
+from internal.apps.persons.domain.person import PersonDomain
 from internal.entity.dictionaries import CountryEntity, GenreEntity
 from internal.entity.films import (
     FilmEntity,
@@ -9,10 +11,7 @@ from internal.entity.films import (
     t__FilmToPerson,
 )
 from internal.entity.persons import PersonEntity
-from internal.apps.dictionaries.domain import CountryDomain, GenreDomain
-from internal.apps.films.domain.film import FilmDomain
-from internal.apps.films.domain.film_detail import FilmDetailDomain
-from internal.apps.persons.domain.person import PersonDomain
+from sqlalchemy.ext.asyncio import AsyncSession
 from utils.domain import map_fields
 
 

@@ -1,8 +1,8 @@
 from fastapi import FastAPI
-from starlette.middleware.cors import CORSMiddleware
-from routers.films import router as films_router
 from routers.dictionaries import router as dictionaries_router
+from routers.films import router as films_router
 from routers.persons import router as persons_router
+from starlette.middleware.cors import CORSMiddleware
 
 
 class SettingApplication:

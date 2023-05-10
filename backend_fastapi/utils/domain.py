@@ -1,8 +1,7 @@
 from typing import Type
 
-from pydantic import BaseModel
-
 from core.database import Base
+from pydantic import BaseModel
 
 
 def map_fields(entity: Base, domain_class: Type[BaseModel]) -> dict:

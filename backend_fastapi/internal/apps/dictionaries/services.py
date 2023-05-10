@@ -1,12 +1,11 @@
 import sqlalchemy as sa
-from sqlalchemy.ext.asyncio import AsyncSession
-
-from internal.entity.dictionaries import CountryEntity, GenreEntity, ProfessionEntity
 from internal.apps.dictionaries.domain import (
     CountryDomain,
     GenreDomain,
     ProfessionDomain,
 )
+from internal.entity.dictionaries import CountryEntity, GenreEntity, ProfessionEntity
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
 async def country_list(session: AsyncSession) -> list[CountryDomain]:

@@ -1,10 +1,8 @@
-from fastapi import APIRouter, Depends
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from core.database import get_session
+from fastapi import APIRouter, Depends
 from internal.apps.films.domain import FilmDetailDomain, FilmDomain
 from internal.apps.films.services import FilmDetailService, films_list
-
+from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter(tags=["films"])
 

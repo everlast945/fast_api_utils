@@ -1,9 +1,8 @@
 from datetime import datetime
 
-from pydantic import BaseModel
-
 from internal.apps.dictionaries.domain import CountryDomain, GenreDomain
 from internal.apps.persons.domain.person import PersonDomain
+from pydantic import BaseModel
 
 
 class FilmDetailDomain(BaseModel):
