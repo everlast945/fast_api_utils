@@ -14,8 +14,8 @@ path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "backend_fa
 sys.path.insert(0, path)
 
 from apps.entity import *  # NOQA
-from core.database import Base
-from core.settings import settings
+from core.database import Base  # NOQA
+from core.settings import settings  # NOQA
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
