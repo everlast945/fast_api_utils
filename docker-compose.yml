@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: uvicorn fast_api_application:app --reload --workers 1 --host 0.0.0.0 --port 8000
+    command: uvicorn fastapi_asgi:app --reload --workers 1 --host 0.0.0.0 --port 8000
     volumes:
       - ./backend_fastapi:/usr/src/app
     ports:
