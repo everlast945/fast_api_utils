@@ -10,3 +10,5 @@ services:
       - ./backend_fastapi:/usr/src/app
     ports:
       - 5001:8000
+    extra_hosts:
+        - "localhost:host-gateway"
