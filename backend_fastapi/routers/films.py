@@ -20,5 +20,7 @@ async def films_list_route(
 
 
 @router.get("/films/{film_id}", summary='Просмотр фильма')
-async def films_detail_route(film_id: int, session: AsyncSession = Depends(get_session)) -> FilmDetailDomain:
+async def films_detail_route(
+    film_id: int, session: AsyncSession = Depends(get_session)
+) -> FilmDetailDomain:
     return await FilmDetailService(session=session, film_id=film_id).get_film_detail()

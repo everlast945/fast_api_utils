@@ -2,7 +2,12 @@ import sqlalchemy as sa
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from internal.entity.dictionaries import CountryEntity, GenreEntity
-from internal.entity.films import FilmEntity, t__CountryToFilm, t__FilmToGenre, t__FilmToPerson
+from internal.entity.films import (
+    FilmEntity,
+    t__CountryToFilm,
+    t__FilmToGenre,
+    t__FilmToPerson,
+)
 from internal.entity.persons import PersonEntity
 from internal.apps.dictionaries.domain import CountryDomain, GenreDomain
 from internal.apps.films.domain.film import FilmDomain
@@ -12,7 +17,6 @@ from utils.domain import map_fields
 
 
 class FilmDetailService:
-
     def __init__(self, session: AsyncSession, film_id: int) -> None:
         super().__init__()
         self.session = session
@@ -28,19 +32,16 @@ class FilmDetailService:
         )
 
     async def _get_film(self) -> FilmEntity:
-        sql = sa.select(FilmEntity).where(
-            FilmEntity.id == self.film_id
-        )
+        sql = sa.select(FilmEntity).where(FilmEntity.id == self.film_id)
         result = await self.session.execute(sql)
         return result.scalars().first()
 
     async def _get_countries(self):
-        sql = sa.select(CountryEntity).join(
-            t__CountryToFilm, t__CountryToFilm.c.A == CountryEntity.id
-        ).join(
-            FilmEntity, FilmEntity.id == t__CountryToFilm.c.B
-        ).where(
-            FilmEntity.id == self.film_id
+        sql = (
+            sa.select(CountryEntity)
+            .join(t__CountryToFilm, t__CountryToFilm.c.A == CountryEntity.id)
+            .join(FilmEntity, FilmEntity.id == t__CountryToFilm.c.B)
+            .where(FilmEntity.id == self.film_id)
         )
         result = await self.session.execute(sql)
         countries = result.scalars().all()
@@ -49,32 +50,26 @@ class FilmDetailService:
         ]
 
     async def _get_genres(self):
-        sql = sa.select(GenreEntity).join(
-            t__FilmToGenre, t__FilmToGenre.c.B == GenreEntity.id
-        ).join(
-            FilmEntity, FilmEntity.id == t__FilmToGenre.c.A
-        ).where(
-            FilmEntity.id == self.film_id
+        sql = (
+            sa.select(GenreEntity)
+            .join(t__FilmToGenre, t__FilmToGenre.c.B == GenreEntity.id)
+            .join(FilmEntity, FilmEntity.id == t__FilmToGenre.c.A)
+            .where(FilmEntity.id == self.film_id)
         )
         result = await self.session.execute(sql)
         items = result.scalars().all()
-        return [
-            GenreDomain(**map_fields(item, GenreDomain)) for item in items
-        ]
+        return [GenreDomain(**map_fields(item, GenreDomain)) for item in items]
 
     async def _get_persons(self):
-        sql =sa.select(PersonEntity).join(
-            t__FilmToPerson, t__FilmToPerson.c.B == PersonEntity.id
-        ).join(
-            FilmEntity, FilmEntity.id == t__FilmToPerson.c.A
-        ).where(
-            FilmEntity.id == self.film_id
+        sql = (
+            sa.select(PersonEntity)
+            .join(t__FilmToPerson, t__FilmToPerson.c.B == PersonEntity.id)
+            .join(FilmEntity, FilmEntity.id == t__FilmToPerson.c.A)
+            .where(FilmEntity.id == self.film_id)
         )
         result = await self.session.execute(sql)
         items = result.scalars().all()
-        return [
-            PersonDomain(**map_fields(item, PersonDomain)) for item in items
-        ]
+        return [PersonDomain(**map_fields(item, PersonDomain)) for item in items]
 
 
 async def films_list(

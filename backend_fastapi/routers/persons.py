@@ -11,10 +11,10 @@ router = APIRouter(tags=["persons"])
 
 @router.get("/persons/", summary='Список актеров/режиссеров')
 async def persons_list_route(
-        q: str = '',
-        limit: int = 10,
-        page: int = 1,
-        session: AsyncSession = Depends(get_session),
+    q: str = '',
+    limit: int = 10,
+    page: int = 1,
+    session: AsyncSession = Depends(get_session),
 ) -> list[PersonDomain]:
     return await persons_list(q=q, limit=limit, page=page, session=session)
 

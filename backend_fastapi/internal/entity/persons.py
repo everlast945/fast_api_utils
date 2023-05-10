@@ -13,8 +13,18 @@ class PersonEntity(Base):
 
 
 t__PersonToProfession = sa.Table(
-    '_PersonToProfession', Base.metadata,
-    sa.Column('A', sa.ForeignKey('Person.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False),
-    sa.Column('B', sa.ForeignKey('Profession.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True),
-    sa.Index('_PersonToProfession_AB_unique', 'A', 'B', unique=True)
+    '_PersonToProfession',
+    Base.metadata,
+    sa.Column(
+        'A',
+        sa.ForeignKey('Person.id', ondelete='CASCADE', onupdate='CASCADE'),
+        nullable=False,
+    ),
+    sa.Column(
+        'B',
+        sa.ForeignKey('Profession.id', ondelete='CASCADE', onupdate='CASCADE'),
+        nullable=False,
+        index=True,
+    ),
+    sa.Index('_PersonToProfession_AB_unique', 'A', 'B', unique=True),
 )

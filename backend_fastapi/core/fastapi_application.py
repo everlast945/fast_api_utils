@@ -9,10 +9,12 @@ class SettingApplication:
     def __init__(self) -> None:
         super().__init__()
         self.app = FastAPI()
+
     def get_application(self):
         self._set_middlewares()
         self._set_routers()
         return self.app
+
     def _set_middlewares(self):
         self.app.add_middleware(
             CORSMiddleware,
@@ -21,6 +23,7 @@ class SettingApplication:
             allow_methods=["*"],
             allow_headers=["*"],
         )
+
     def _set_routers(self):
         self.app.include_router(dictionaries_router)
         self.app.include_router(persons_router)

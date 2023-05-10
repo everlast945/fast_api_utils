@@ -5,11 +5,14 @@ from internal.entity.dictionaries import ProfessionEntity
 from internal.entity.films import FilmEntity, t__FilmToPerson
 from internal.entity.persons import PersonEntity, t__PersonToProfession
 from internal.apps.persons.domain.person import PersonDomain
-from internal.apps.persons.domain.person_detail import PersonDetailDomain, PersonFilmDomain, PersonProfession
+from internal.apps.persons.domain.person_detail import (
+    PersonDetailDomain,
+    PersonFilmDomain,
+    PersonProfession,
+)
 
 
 class PersonDetailService:
-
     def __init__(self, session: AsyncSession, person_id: int) -> None:
         super().__init__()
         self.session = session
@@ -25,34 +28,36 @@ class PersonDetailService:
             nameRu=person.nameRu,
             nameEn=person.nameEn,
             films=await self._serialize_films(films),
-            professions=await self._serialize_professions(professions)
+            professions=await self._serialize_professions(professions),
         )
 
     async def _get_person(self) -> PersonEntity:
         sql = sa.select(PersonEntity).where(
             PersonEntity.id == self.person_id,
-            )
+        )
         result = await self.session.execute(sql)
         return result.scalars().first()
 
     async def _get_films(self) -> list[FilmEntity]:
-        sql = sa.select(FilmEntity).outerjoin(
-            t__FilmToPerson,t__FilmToPerson.c.A == FilmEntity.id
-        ).outerjoin(
-            PersonEntity, PersonEntity.id == t__FilmToPerson.c.B
-        ).where(
-            PersonEntity.id == self.person_id,
+        sql = (
+            sa.select(FilmEntity)
+            .outerjoin(t__FilmToPerson, t__FilmToPerson.c.A == FilmEntity.id)
+            .outerjoin(PersonEntity, PersonEntity.id == t__FilmToPerson.c.B)
+            .where(
+                PersonEntity.id == self.person_id,
             )
+        )
         result = await self.session.execute(sql)
         return result.scalars().all()
 
     async def _get_professions(self) -> list[ProfessionEntity]:
-        sql = sa.select(ProfessionEntity).join(
-            t__PersonToProfession, t__PersonToProfession.c.B == ProfessionEntity.id
-        ).join(
-            PersonEntity, PersonEntity.id == t__PersonToProfession.c.A
-        ).where(
-            PersonEntity.id == self.person_id
+        sql = (
+            sa.select(ProfessionEntity)
+            .join(
+                t__PersonToProfession, t__PersonToProfession.c.B == ProfessionEntity.id
+            )
+            .join(PersonEntity, PersonEntity.id == t__PersonToProfession.c.A)
+            .where(PersonEntity.id == self.person_id)
         )
         result = await self.session.execute(sql)
         return result.scalars().all()
@@ -65,7 +70,9 @@ class PersonDetailService:
             for film in films
         ]
 
-    async def _serialize_professions(self, professions: list[ProfessionEntity]) -> list[PersonProfession]:
+    async def _serialize_professions(
+        self, professions: list[ProfessionEntity]
+    ) -> list[PersonProfession]:
         return [
             PersonProfession(
                 id=profession.id,
@@ -95,6 +102,8 @@ async def persons_list(
     result = await session.execute(sql)
     persons = result.scalars().all()
     return [
-        PersonDomain(**{field: getattr(person, field) for field in PersonDomain.__fields__})
+        PersonDomain(
+            **{field: getattr(person, field) for field in PersonDomain.__fields__}
+        )
         for person in persons
     ]
