@@ -1,3 +1,4 @@
+from core.clickhouse import get_clickhouse_session
 from core.database import get_session
 from fastapi import APIRouter, Depends
 from internal.apps.dictionaries.domain import (
@@ -6,6 +7,7 @@ from internal.apps.dictionaries.domain import (
     ProfessionDomain,
 )
 from internal.apps.dictionaries.services import (
+    country_clickhouse_list,
     country_list,
     genres_list,
     professions_list,
@@ -20,6 +22,13 @@ async def dictionaries_countries(
     session: AsyncSession = Depends(get_session),
 ) -> list[CountryDomain]:
     return await country_list(session)
+
+
+@router.get("/dictionaries/clickhouse/countries/", summary='Справочник стран')
+async def dictionaries_clickhouse_countries(
+    session: AsyncSession = Depends(get_clickhouse_session),
+) -> list[CountryDomain]:
+    return await country_clickhouse_list(session)
 
 
 @router.get("/dictionaries/genres/", summary='Справочник жанров')

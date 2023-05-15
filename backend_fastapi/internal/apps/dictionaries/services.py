@@ -5,12 +5,29 @@ from internal.apps.dictionaries.domain import (
     ProfessionDomain,
 )
 from internal.entity.dictionaries import CountryEntity, GenreEntity, ProfessionEntity
+from internal.entity_clickhouse.dictionaries import (
+    CountryEntity as CountryClickhouseEntity,
+)
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
 async def country_list(session: AsyncSession) -> list[CountryDomain]:
     sql = sa.select(CountryEntity).order_by(CountryEntity.countryName.desc())
     result = await session.execute(sql)
+    countries = result.scalars().all()
+    return [
+        CountryDomain(
+            **{field: getattr(country, field) for field in CountryDomain.__fields__}
+        )
+        for country in countries
+    ]
+
+
+async def country_clickhouse_list(session: AsyncSession) -> list[CountryDomain]:
+    sql = sa.select(CountryClickhouseEntity).order_by(
+        CountryClickhouseEntity.countryName.desc()
+    )
+    result = session.execute(sql)
     countries = result.scalars().all()
     return [
         CountryDomain(
