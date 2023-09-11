@@ -10,10 +10,10 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 from alembic import context
 
 # Переход в директорию проекта. Чтобы видеть все модели
-path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "backend_fastapi"))
+path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src"))
 sys.path.insert(0, path)
 
-from apps.entity import *  # NOQA
+from app.dictionaries.models import *  # NOQA
 from core.database import Base  # NOQA
 from core.settings import settings  # NOQA
 
